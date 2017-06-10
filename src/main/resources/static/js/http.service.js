@@ -13,7 +13,6 @@ angular.module('kohonenApp').factory('HttpService', ['$http', '$q', function($ht
  
     function configureNetwork(config) {
         var deferred = $q.defer();
-        console.log(config);
         $http.put(REST_SERVICE_URI+'configure/', config)
             .then(
             function (response) {
@@ -27,17 +26,25 @@ angular.module('kohonenApp').factory('HttpService', ['$http', '$q', function($ht
         return deferred.promise;
     }
  
-    function search(file) {
+    function search(formData) {
     	var deferred = $q.defer();
-        $http.post(REST_SERVICE_URI+'search/', file)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while searching.');
-                deferred.reject(errResponse);
-            }
+        $http.post(
+        		REST_SERVICE_URI+'search/', 
+        		formData,
+        		{
+                    transformRequest: angular.identity,
+                    headers: {
+                      'Content-Type': undefined
+                    }
+                  }
+        ).then(
+	        function (response) {
+	            deferred.resolve(response.data);
+	        },
+	        function(errResponse){
+	            console.error('Error while searching.');
+	            deferred.reject(errResponse);
+	        }
         );
         return deferred.promise;
     }

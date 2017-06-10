@@ -13,5 +13,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+
+coeff:
+  hsb: 1
+  grad: 3
+  ratio: 2
         
     

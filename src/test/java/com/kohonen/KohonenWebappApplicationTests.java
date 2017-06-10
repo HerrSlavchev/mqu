@@ -3,13 +3,13 @@ package com.kohonen;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,21 +24,19 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.kohonen.model.Document;
-import com.kohonen.model.EdgePoint;
-import com.kohonen.model.FeatureSpace;
-import com.kohonen.model.Network;
-import com.kohonen.model.NetworkSpecification;
-import com.kohonen.service.DocumentService;
-import com.kohonen.service.FeatureExtractor;
-import com.kohonen.service.KohonenEngine;
-import com.kohonen.service.distance.DistanceMeasure;
-import com.kohonen.service.edge.ContourExtractor;
-import com.kohonen.service.edge.EdgePointExtractor;
-import com.kohonen.service.edge.ShellExtractor;
-import com.kohonen.service.edge.ShellReinforcer;
-import com.kohonen.service.util.ImageUtil;
-import com.kohonen.service.util.MatrixCropUtil;
+import com.webapp.kohonen.model.Document;
+import com.webapp.kohonen.model.EdgePoint;
+import com.webapp.kohonen.model.FeatureSpace;
+import com.webapp.kohonen.service.DocumentService;
+import com.webapp.kohonen.service.FeatureExtractor;
+import com.webapp.kohonen.service.KohonenEngine;
+import com.webapp.kohonen.service.distance.DistanceMeasure;
+import com.webapp.kohonen.service.edge.ContourExtractor;
+import com.webapp.kohonen.service.edge.EdgePointExtractor;
+import com.webapp.kohonen.service.edge.ShellExtractor;
+import com.webapp.kohonen.service.edge.ShellReinforcer;
+import com.webapp.kohonen.service.util.ImageUtil;
+import com.webapp.kohonen.service.util.MatrixCropUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -162,7 +160,6 @@ public class KohonenWebappApplicationTests {
 	@Test
 	public void testImages() throws Exception {
 		Resource[] resources = resourcePatternResolver.getResources("classpath:static/images/*.jpg");
-		//processImage(resources[0]);
 		long begin = System.currentTimeMillis();
 		for(Resource res : resources) {
 			System.out.println(res.getFilename()); 
@@ -170,6 +167,14 @@ public class KohonenWebappApplicationTests {
 		}
 		long total = System.currentTimeMillis() - begin;
 		System.out.println("=== " + total);
+	}
+	
+	@Test
+	public void testImagesWithPictures() throws Exception {
+		Resource[] resources = resourcePatternResolver.getResources("classpath:static/images/*.jpg");
+		for(Resource res : resources) {
+			createImages(res);
+		}
 	}
 	
 	private void processImage(Resource original) throws Exception {
@@ -214,10 +219,13 @@ public class KohonenWebappApplicationTests {
 		sb.append("\n");
 		
 		System.out.println(sb);
+	}
+	
+	private void createImages(Resource original) throws Exception {
 		
+		BufferedImage image = ImageUtil.readImage(original.getFile().toPath());
 		
-		
-		/*final Raster raster = image.getRaster();
+		final Raster raster = image.getRaster();
 		final int width = raster.getWidth();
 		final int height = raster.getHeight();
 
@@ -246,7 +254,7 @@ public class KohonenWebappApplicationTests {
 		makeImageContour(imgType, shell, fileName, "-shell");
 		makeImageContour(imgType, reinforcedShell, fileName, "-reinforced");
 		
-		Contour contour = sobelContourExtractor.extractSobelContour(grayscale);*/
+		//Contour contour = sobelContourExtractor.extractSobelContour(grayscale);
 	}
 
 	private void makeImageContour(int imgType, EdgePoint[][] sobelPoints, String fileName, String marker) throws Exception {

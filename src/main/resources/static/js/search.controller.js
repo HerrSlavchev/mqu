@@ -1,21 +1,38 @@
 'use strict';
  
-angular.module('kohonenApp').controller('SearchController', ['$scope', 'HttpService', function($scope, HttpService) {
+angular.module('kohonenApp').controller('SearchController', ['HttpService', function(HttpService) {
     var self = this;
-    self.image={};
     
+    self.image = null;
+    self.res = null;
     self.search = search;
  
     function search() {
-        HttpService.search(self.image)
+    	var fd = new FormData();
+        var imgBlob = dataURItoBlob(self.image);
+        fd.append('file', imgBlob);
+        HttpService.search(fd)
         .then(
                 function(d) {
-                    console.log('success');
+                    self.res = d;
                 },
                 function(errResponse){
                     console.error('Error while searching');
                 }
-            );
+        );
     }
+    
+    function dataURItoBlob(dataURI) {
+    	console.log(dataURI);
+        var binary = atob(dataURI.split(',')[1]);
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+          array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {
+          type: mimeString
+        });
+      }
  
 }]);

@@ -84,11 +84,48 @@
                           <div class="form-actions floatRight">
                               <input type="submit"  value="Configure Network" class="btn btn-primary btn-sm" ng-disabled="congifurationForm.$invalid">
                           </div>
+                          
                       </div>
                       
                   </form>
               </div>
+              
+              <div ng-if="ctrl.viewNetwork">
+              	 <button ng-click="ctrl.toggleView()">Hide network</button>
+              	 <div ng-repeat="node in ctrl.res">
+              	 	<div><br></div>
+              	 	<div ng-repeat="doc in node.documents" style="width:750px">
+              	 		<img src="http://localhost:8080/images/{{doc.path}}" width="40" height="40" style=" float:left; display:inline">
+              	 	</div>
+              	 	<div><br></div>
+              	 </div>
+              </div>
+              <div ng-if="!ctrl.viewNetwork">
+              	 <button ng-click="ctrl.toggleView()">Show network</button>
+              </div>
           </div>
+          
+          
+          </div>
+          
+          <div class="generic-container" ng-controller="SearchController as ctrl">
+               <input type="file" fileread="ctrl.image" />
+               <br>
+               <img src="{{ctrl.image}}" width="100" height="100" alt="Image preview...">
+               <br><br>
+               <button ng-click="ctrl.search()">Search</button>
+               <br><br>
+               <div ng-if="ctrl.res && ctrl.res.nodes">
+	              	<div ng-repeat="node in ctrl.res.nodes">
+	              		<div><br></div>
+	               		<div ng-repeat="doc in node.documents" style="width:2500px">
+		                 	<img src="http://localhost:8080/images/{{doc.path}}" width="100" height="80" style=" float:left; display:inline">
+		                 </div>
+		                 <div><br><br><br><br><br></div>
+	             	</div>
+                 </div>
+            </div>
+          
 	</div>
 
 	<script src="js/angular.min.js"></script>
@@ -96,5 +133,6 @@
     <script src="js/http.service.js"></script>
     <script src="js/configuration.controller.js"></script>
     <script src="js/search.controller.js"></script>
+    <script src="js/fileread.directive.js"></script>
 </body>
 </html>
