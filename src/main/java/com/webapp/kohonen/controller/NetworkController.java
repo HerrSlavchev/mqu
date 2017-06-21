@@ -19,7 +19,7 @@ import com.webapp.kohonen.service.NetworkService;
 public class NetworkController {
 	
 	private NetworkService networkService;
-	private DocumentService documentService;
+	private DocumentService documentService; 
 	
 	@Autowired
 	public NetworkController(NetworkService networkService, DocumentService documentService) {

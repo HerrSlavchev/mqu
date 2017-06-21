@@ -1,138 +1,178 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-	<title>Kohonen Application</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+<title>Kohonen Application</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
 <body>
 
 	<div ng-app="kohonenApp">
-	
+
 		<div class="generic-container" ng-controller="ConfigurationController as ctrl">
-          <div class="panel panel-default">
-              <div class="panel-heading"><span class="lead">Network configuration</span></div>
-              <div class="formcontainer">
-                  <form ng-submit="ctrl.submit()" name="congifurationForm" class="form-horizontal">
-                      
-                      <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="rows">Rows</label>
-                              <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.configuration.rows" id="rows" class="form-control input-sm" placeholder="Enter rows number" required/>
-                                  <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="congifurationForm.rows.$error.required">This is a required field</span>
-                                      <span ng-show="congifurationForm.rows.$invalid">This field is invalid </span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                         
-                      <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="cols">Columns</label>
-                              <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.configuration.cols" id="cols" class="form-control input-sm" placeholder="Enter columns number" required/>
-                                  <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="congifurationForm.cols.$error.required">This is a required field</span>
-                                      <span ng-show="congifurationForm.cols.$invalid">This field is invalid </span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="lead">Network configuration</span>
+				</div>
+				<br>
+				<div class="formcontainer" style="padding-left: 10px;">
+					<form ng-submit="ctrl.submit()" name="congifurationForm" class="form-horizontal">
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label class="col-md-3 control-lable" for="rows">Rows</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="ctrl.configuration.rows" id="rows" class="form-control input-sm" placeholder="Enter rows number" required />
+									<div class="has-error" ng-show="myForm.$dirty">
+										<span ng-show="congifurationForm.rows.$error.required">This is a required field</span> 
+										<span ng-show="congifurationForm.rows.$invalid">This field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                      <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="epochs">Epochs</label>
-                              <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.configuration.epochs" id="epochs" class="form-control input-sm" placeholder="Enter epochs number" required/>
-                                  <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="congifurationForm.epochs.$error.required">This is a required field</span>
-                                      <span ng-show="congifurationForm.epochs.$invalid">This field is invalid </span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>                      
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label class="col-md-3 control-lable" for="cols">Columns</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="ctrl.configuration.cols" id="cols" class="form-control input-sm" placeholder="Enter columns number" required />
+									<div class="has-error" ng-show="myForm.$dirty">
+										<span ng-show="congifurationForm.cols.$error.required">This is a required field</span> 
+										<span ng-show="congifurationForm.cols.$invalid">This field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                      <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="lr">Learning rate</label>
-                              <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.configuration.learningRate" id="lr" class="form-control input-sm" placeholder="Enter learning rate" required/>
-                                  <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="congifurationForm.lr.$error.required">This is a required field</span>
-                                      <span ng-show="congifurationForm.lr.$invalid">This field is invalid </span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      
-                      <div class="row">
-                          <div class="form-group col-md-12">
-                              <label class="col-md-2 control-lable" for="radius">Radius</label>
-                              <div class="col-md-7">
-                                  <input type="text" ng-model="ctrl.configuration.radius" id="radius" class="form-control input-sm" placeholder="Enter radius" required/>
-                                  <div class="has-error" ng-show="myForm.$dirty">
-                                      <span ng-show="congifurationForm.radius.$error.required">This is a required field</span>
-                                      <span ng-show="congifurationForm.radius.$invalid">This field is invalid </span>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>                                                                   
-                       
-                      <div class="row">
-                          <div class="form-actions floatRight">
-                              <input type="submit"  value="Configure Network" class="btn btn-primary btn-sm" ng-disabled="congifurationForm.$invalid">
-                          </div>
-                          
-                      </div>
-                      
-                  </form>
-              </div>
-              
-              <div ng-if="ctrl.viewNetwork">
-              	 <button ng-click="ctrl.toggleView()">Hide network</button>
-              	 <div ng-repeat="node in ctrl.res">
-              	 	<div><br></div>
-              	 	<div ng-repeat="doc in node.documents" style="width:750px">
-              	 		<img src="http://localhost:8080/images/{{doc.path}}" width="40" height="40" style=" float:left; display:inline">
-              	 	</div>
-              	 	<div><br></div>
-              	 </div>
-              </div>
-              <div ng-if="!ctrl.viewNetwork">
-              	 <button ng-click="ctrl.toggleView()">Show network</button>
-              </div>
-          </div>
-          
-          
-          </div>
-          
-          <div class="generic-container" ng-controller="SearchController as ctrl">
-               <input type="file" fileread="ctrl.image" />
-               <br>
-               <img src="{{ctrl.image}}" width="100" height="100" alt="Image preview...">
-               <br><br>
-               <button ng-click="ctrl.search()">Search</button>
-               <br><br>
-               <div ng-if="ctrl.res && ctrl.res.nodes">
-	              	<div ng-repeat="node in ctrl.res.nodes">
-	              		<div><br></div>
-	               		<div ng-repeat="doc in node.documents" style="width:2500px">
-		                 	<img src="http://localhost:8080/images/{{doc.path}}" width="100" height="80" style=" float:left; display:inline">
-		                 </div>
-		                 <div><br><br><br><br><br></div>
-	             	</div>
-                 </div>
-            </div>
-          
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label class="col-md-3 control-lable" for="epochs">Epochs</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="ctrl.configuration.epochs" id="epochs" class="form-control input-sm" placeholder="Enter epochs number" required />
+									<div class="has-error" ng-show="myForm.$dirty">
+										<span ng-show="congifurationForm.epochs.$error.required">This is a required field</span>
+										<span ng-show="congifurationForm.epochs.$invalid">This field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label class="col-md-3 control-lable" for="lr">Learning rate</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="ctrl.configuration.learningRate" id="lr" class="form-control input-sm" placeholder="Enter learning rate" required />
+									<div class="has-error" ng-show="myForm.$dirty">
+										<span ng-show="congifurationForm.lr.$error.required">This is a required field</span> 
+										<span ng-show="congifurationForm.lr.$invalid">This field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label class="col-md-3 control-lable" for="radius">Radius</label>
+								<div class="col-md-7">
+									<input type="text" ng-model="ctrl.configuration.radius" id="radius" class="form-control input-sm" placeholder="Enter radius" required />
+									<div class="has-error" ng-show="myForm.$dirty">
+										<span ng-show="congifurationForm.radius.$error.required">This is a required field</span> 
+										<span ng-show="congifurationForm.radius.$invalid">This field is invalid </span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-actions floatRight col-md-4">
+								<input type="submit" value="Configure Network" class="btn btn-primary btn-sm" ng-disabled="congifurationForm.$invalid">
+							</div>
+						</div>
+
+						<div class="row" ng-if="ctrl.viewNetwork">
+							<br>
+							<div class="form-actions floatRight col-md-4">
+
+								<button ng-click="ctrl.toggleView()" class="btn btn-info">Hide network</button>
+								<div ng-repeat="node in ctrl.res">
+									<div>
+										<br>
+									</div>
+									<div ng-repeat="doc in node.documents" style="width: 750px">
+										<img src="http://localhost:8080/images/{{doc.path}}"
+											width="40" height="40" style="float: left; display: inline">
+									</div>
+									<div>
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row" ng-if="!ctrl.viewNetwork">
+							<br>
+							<div class="form-actions floatRight col-md-4">
+								<button ng-click="ctrl.toggleView()" class="btn btn-info">Show network</button>
+							</div>
+						</div>
+
+						<div class="row"><br></div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="generic-container" ng-controller="SearchController as ctrl">
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span class="lead">Query</span>
+				</div>
+				<br>
+				<div style="padding-left: 10px;">
+					
+					<input id="queryFile" type="file" fileread="ctrl.image" accept="image/*" style="display: none;"/> 
+					<button onclick="document.getElementById('queryFile').click();" class="btn btn-info">Choose file</button>
+					<br> 
+					
+					<img ng-if="ctrl.image" src="{{ctrl.image}}" width="100" height="100" alt="Image preview...">
+					<br>
+					<br>
+					
+					<button ng-click="ctrl.search()" class="btn btn-primary" ng-disabled="!ctrl.image">Search</button>
+					<br>
+					<br>
+					
+					<div ng-if="ctrl.res && ctrl.res.nodes">
+						<div ng-repeat="node in ctrl.res.nodes">
+							<div>
+								<br>
+							</div>
+							<div ng-repeat="doc in node.documents" style="width: 2500px">
+								<img src="http://localhost:8080/images/{{doc.path}}" width="100" height="80" style="float: left; display: inline">
+							</div>
+							<div>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+
 	</div>
 
 	<script src="js/angular.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/http.service.js"></script>
-    <script src="js/configuration.controller.js"></script>
-    <script src="js/search.controller.js"></script>
-    <script src="js/fileread.directive.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/http.service.js"></script>
+	<script src="js/configuration.controller.js"></script>
+	<script src="js/search.controller.js"></script>
+	<script src="js/fileread.directive.js"></script>
 </body>
 </html>

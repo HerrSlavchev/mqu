@@ -2,30 +2,14 @@ package com.webapp.kohonen.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.webapp.kohonen.model.Document;
 import com.webapp.kohonen.model.Network;
 import com.webapp.kohonen.model.NetworkSpecification;
 
-@Service
-public class NetworkService {
+public interface NetworkService {
 
-	@Autowired
-	private KohonenEngine engine;
-
-	private Network network;
-
-	public NetworkService(KohonenEngine engine) {
-		this.engine = engine;
-	}
-
-	public void prepareNetwork(NetworkSpecification networkSpec, List<Document> trainingData) {
-		network = engine.createNetwork(networkSpec, trainingData);
-	}
-
-	public Network getNetwork() {
-		return network;
-	}
+	public Network getNetwork();
+	
+	public void prepareNetwork(NetworkSpecification networkSpec, List<Document> trainingData);
+	
 }

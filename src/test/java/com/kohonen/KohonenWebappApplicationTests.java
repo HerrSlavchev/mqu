@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.webapp.kohonen.model.Document;
 import com.webapp.kohonen.model.EdgePoint;
 import com.webapp.kohonen.model.FeatureSpace;
-import com.webapp.kohonen.service.DocumentService;
+import com.webapp.kohonen.service.PersistentDocumentService;
 import com.webapp.kohonen.service.FeatureExtractor;
 import com.webapp.kohonen.service.KohonenEngine;
 import com.webapp.kohonen.service.distance.DistanceMeasure;
@@ -43,7 +43,7 @@ import com.webapp.kohonen.service.util.MatrixCropUtil;
 public class KohonenWebappApplicationTests {
 
 	@Autowired
-	DocumentService documentService;
+	PersistentDocumentService documentService;
 	
 	@Autowired
 	ResourcePatternResolver resourcePatternResolver;
